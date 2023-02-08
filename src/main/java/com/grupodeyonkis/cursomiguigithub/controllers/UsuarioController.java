@@ -1,6 +1,6 @@
 package com.grupodeyonkis.cursomiguigithub.controllers;
 
-import com.grupodeyonkis.migui.cursomigui.models.Usuario;
+import com.grupodeyonkis.cursomiguigithub.model.Usuario;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
