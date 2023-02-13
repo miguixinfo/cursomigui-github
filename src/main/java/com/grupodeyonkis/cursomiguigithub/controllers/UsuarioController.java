@@ -5,6 +5,7 @@ import com.grupodeyonkis.cursomiguigithub.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioDao usuariodao;
 
-    @RequestMapping(value = "usuario/{id}")
+    @RequestMapping(value = "api/usuarios/{id}", method = RequestMethod.GET)
     public Usuario getUsuario(@PathVariable Long id ) {
         Usuario usuario = new Usuario();
         usuario.setNombre("Miguel");
@@ -28,7 +29,7 @@ public class UsuarioController {
         return usuario;
     }
 
-    @RequestMapping(value = "usuarios")
+    @RequestMapping(value = "api/usuarios")
     public List<Usuario> getUsuarios() {
         return usuariodao.getUsuarios();
     }
@@ -44,15 +45,9 @@ public class UsuarioController {
         return usuario;
     }
 
-    @RequestMapping(value = "usuario12")
-    public Usuario eliminar() {
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Miguel");
-        usuario.setApellido("Gómez");
-        usuario.setEmail("gmigui@gmail.com");
-        usuario.setTelefono("635749440");
-
-        return usuario;
+    @RequestMapping(value = "api/usuarios/{id}", method = RequestMethod.DELETE)
+    public void eliminar(@PathVariable Long id) {
+        usuariodao.eliminar(id);
     }
 
     @RequestMapping(value = "usuario123")
