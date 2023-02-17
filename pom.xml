@@ -58,10 +58,16 @@
 			<version>8.0.19</version>
 		</dependency>
 		<dependency>
+			<groupId>de.mkammerer</groupId>
+			<artifactId>argon2-jvm</artifactId>
+			<version>2.11</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
 			<version>3.0.4</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
