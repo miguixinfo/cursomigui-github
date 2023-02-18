@@ -2,6 +2,7 @@ package com.grupodeyonkis.cursomiguigithub.controllers;
 
 import com.grupodeyonkis.cursomiguigithub.dao.UsuarioDao;
 import com.grupodeyonkis.cursomiguigithub.model.Usuario;
+import com.grupodeyonkis.cursomiguigithub.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuariodao;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @RequestMapping(value = "api/usuarios/{id}", method = RequestMethod.GET)
     public Usuario getUsuario(@PathVariable Long id ) {
@@ -40,7 +44,12 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "api/usuarios", method = RequestMethod.GET)
-    public List<Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios(@RequestHeader(value = "Authorization") String token) {
+
+        String usuarioId = jwtUtil.getKey(token);
+        if (!validarToken(token)) {
+            return new ArrayList<>();
+        }
         return usuariodao.getUsuarios();
     }
 
@@ -56,7 +65,11 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "api/usuarios/{id}", method = RequestMethod.DELETE)
-    public void eliminar(@PathVariable Long id) {
+    public void eliminar(@RequestHeader(value = "Authorization") String token, @PathVariable Long id) {
+        if (!validarToken(token)) {
+            return;
+        }
+
         usuariodao.eliminar(id);
     }
 
@@ -71,6 +84,10 @@ public class UsuarioController {
         return usuario;
     }
 
-
+    // función de apoyo
+    private boolean validarToken(String token){
+        String usuarioid=jwtUtil.getKey(token);
+        return usuarioid!=null;
+    }
 
 }
